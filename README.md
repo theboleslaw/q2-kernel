@@ -17,16 +17,11 @@ All files for this guide are in the GitHub repository [theboleslaw/q2-kernel](ht
 
 ### 1. Install git
 
-Pick the instructions for your computer:
+On Debian 11 (bullseye), which the printer runs, install git with:
 
-- **Debian, Ubuntu, Raspberry Pi OS, Linux Mint:**
-  ```bash
-  sudo apt update && sudo apt install -y git
-  ```
-- **Fedora:** `sudo dnf install -y git`
-- **Arch Linux:** `sudo pacman -S git`
-- **macOS:** `xcode-select --install` (or `brew install git` if you use Homebrew)
-- **Windows:** `winget install --id Git.Git -e`, or download the installer from [git-scm.com](https://git-scm.com/download/win)
+```bash
+sudo apt update && sudo apt install -y git
+```
 
 Check that it installed:
 
