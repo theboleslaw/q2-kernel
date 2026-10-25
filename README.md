@@ -11,6 +11,63 @@ Credits: the build files in `n3oney-nix-q2-kernel/` come from
 
 > **Warning.** Writing to the `boot` partition is the one step that can stop the printer from booting. Always back up the partitions first (step 1), and keep the backups until you've confirmed the printer boots.
 
+## Download the files
+
+All files for this guide are in the GitHub repository [theboleslaw/q2-kernel](https://github.com/theboleslaw/q2-kernel). You need `git` to download them.
+
+### 1. Install git
+
+Pick the instructions for your computer:
+
+- **Debian, Ubuntu, Raspberry Pi OS, Linux Mint:**
+  ```bash
+  sudo apt update && sudo apt install -y git
+  ```
+- **Fedora:** `sudo dnf install -y git`
+- **Arch Linux:** `sudo pacman -S git`
+- **macOS:** `xcode-select --install` (or `brew install git` if you use Homebrew)
+- **Windows:** `winget install --id Git.Git -e`, or download the installer from [git-scm.com](https://git-scm.com/download/win)
+
+Check that it installed:
+
+```bash
+git --version
+```
+
+### 2. Download the repository
+
+```bash
+git clone https://github.com/theboleslaw/q2-kernel.git
+cd q2-kernel
+```
+
+This creates a `q2-kernel` folder with:
+
+- `README.md`: this guide
+- `logo/`: the ready-made logo, `klipper-black-480x272.bmp`
+- `scripts/`: `replace-boot-logo.py`, used for Option A
+- `n3oney-nix-q2-kernel/`: the build files from n3oney's repo, used for Option B
+
+To update to the latest version later, run `git pull` inside the `q2-kernel` folder.
+
+### 3. Copy the files to the printer (only if you run the commands on the printer)
+
+Some commands in this guide, such as the backup and the logo replacement, run on the printer. Copy the folder to the printer from your computer with `scp`. Replace `mks` and `192.168.2.210` with your printer's user and address:
+
+```bash
+scp -r q2-kernel mks@192.168.2.210:~/
+```
+
+Then on the printer, run the commands from inside `~/q2-kernel`.
+
+### 4. Download the kernel source (Option B only)
+
+Option B also needs the kernel source. This is large, so clone it only when you need to build. The Rockchip kernel repository is [rockchip-linux/kernel](https://github.com/rockchip-linux/kernel). Use the branch that matches the printer's kernel (6.12). Check the n3oney flake for the exact branch name before cloning:
+
+```bash
+git clone --depth 1 --branch <branch> https://github.com/rockchip-linux/kernel.git
+```
+
 ## What is where
 
 The eMMC on the Q2 (`mmcblk1` on the printer) has these partitions:
