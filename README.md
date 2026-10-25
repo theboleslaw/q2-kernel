@@ -5,7 +5,7 @@ This guide covers two ways to change the logo the Q2 shows when it powers on:
 - **Option A: logo swap only.** Keeps the existing kernel and swaps the two BMP images inside `boot.img`. This is the quick route and what was tested on the printer. No compiling needed.
 - **Option B: full kernel rebuild.** Builds a new kernel and boot image from source with your own logo, using the build files from n3oney's repo.
 
-Credits: the build files in `n3oney-nix-q2-kernel/` come from
+Credits: the build files in `n3oney-qidi-q2-klipper/nix/q2-kernel/` come from
 [n3oney/qidi-q2-klipper](https://github.com/n3oney/qidi-q2-klipper/tree/main/nix/q2-kernel)
 (`nix/q2-kernel`). Kernel sources are GPL-2.0.
 
@@ -32,16 +32,18 @@ git --version
 ### 2. Download the repository
 
 ```bash
-git clone https://github.com/theboleslaw/q2-kernel.git
+git clone --recurse-submodules https://github.com/theboleslaw/q2-kernel.git
 cd q2-kernel
 ```
+
+The `--recurse-submodules` option also downloads n3oney's repository into `n3oney-qidi-q2-klipper/`. If you cloned without it, run `git submodule update --init` inside the folder.
 
 This creates a `q2-kernel` folder with:
 
 - `README.md`: this guide
 - `logo/`: the ready-made logo, `klipper-black-480x272.bmp`
 - `scripts/`: `replace-boot-logo.py`, used for Option A
-- `n3oney-nix-q2-kernel/`: the build files from n3oney's repo, used for Option B
+- `n3oney-qidi-q2-klipper/`: n3oney's repository as a git submodule. The build files are in `nix/q2-kernel/`, used for Option B.
 
 To update to the latest version later, run `git pull` inside the `q2-kernel` folder.
 
@@ -154,7 +156,7 @@ The n3oney flake wires these together. Check that repo's `flake.nix` for the exa
 Replace `logo.bmp` in the build directory with your 480×272 BMP:
 
 ```bash
-cp logo/klipper-black-480x272.bmp n3oney-nix-q2-kernel/logo.bmp
+cp logo/klipper-black-480x272.bmp n3oney-qidi-q2-klipper/nix/q2-kernel/logo.bmp
 ```
 
 The `default.nix` installs this file as both `logo.bmp` and `logo_kernel.bmp`.
@@ -375,4 +377,4 @@ To remove the swap file, run `sudo swapoff /swapfile`, then delete the line from
 - `README.md`: this guide.
 - `logo/klipper-black-480x272.bmp`: the ready-made logo (black background, white logo).
 - `scripts/replace-boot-logo.py`: swaps the two logos inside an existing `boot.img` (Option A).
-- `n3oney-nix-q2-kernel/`: build files copied from [n3oney/qidi-q2-klipper](https://github.com/n3oney/qidi-q2-klipper/tree/main/nix/q2-kernel) (`default.nix`, `q2.config`, `qemu.config`, `output.dts`, `verify-boot.py`, the Rockchip patch, and the original `logo.bmp`).
+- `n3oney-qidi-q2-klipper/`: git submodule of [n3oney/qidi-q2-klipper](https://github.com/n3oney/qidi-q2-klipper). The build files (`default.nix`, `q2.config`, `qemu.config`, `output.dts`, `verify-boot.py`, the Rockchip patch, and the original `logo.bmp`) are in `nix/q2-kernel/`.
